@@ -1,0 +1,34 @@
+package InspectorTests
+import Inspector
+import ClosureTimers
+import LinkedList
+import GroupUtils
+
+constant player g_HostPlayer = Player(0)
+
+// ============================================================================
+public function player.getSelectedUnits() returns LinkedList<unit>
+  let selectedUnits = new LinkedList<unit>()
+  let tempGroup = getGroup()
+  tempGroup.enumUnitsSelected(this, null)
+  for u in tempGroup
+    selectedUnits.add(u)
+  tempGroup.release()
+  return selectedUnits
+
+// ============================================================================
+function onSelectionChanged()
+  if (GetTriggerPlayer() == g_HostPlayer)
+    Inspector.setContexts(g_HostPlayer.getSelectedUnits())
+
+// ============================================================================
+init
+
+  nullTimer() () ->
+    Inspector.initialize(g_HostPlayer)
+    Inspector.show()
+  
+  let playerSelectionChangedTrigger = CreateTrigger()
+  playerSelectionChangedTrigger.addCondition(Condition(function onSelectionChanged))
+  TriggerRegisterPlayerUnitEvent(playerSelectionChangedTrigger, g_HostPlayer, EVENT_PLAYER_UNIT_SELECTED, null)
+  TriggerRegisterPlayerUnitEvent(playerSelectionChangedTrigger, g_HostPlayer, EVENT_PLAYER_UNIT_DESELECTED, null)

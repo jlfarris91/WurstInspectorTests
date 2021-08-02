@@ -1,0 +1,9 @@
+---
+projectName: InspectorTests
+dependencies:
+- https://github.com/jlfarris91/WurstCore
+- https://github.com/jlfarris91/WurstStdlib2
+buildMapData:
+  name: MyMapName
+  fileName: MyMapFile
+  author: James
