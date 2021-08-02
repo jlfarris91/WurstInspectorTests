@@ -103,21 +103,51 @@ Frame "FRAME" "InspectorCategoryRowTemplate" {
 Frame "FRAME" "IntEditorTemplate" {
   UseActiveContext,
   Height 0.03,
+}
 
-  // Frame "GLUEEDITBOX" "IntEditorTextBox" {
-  //   SetPoint TOPLEFT, "IntEditorTemplate", TOPLEFT, 0.0, 0.0,
-  //   SetPoint BOTTOMRIGHT, "IntEditorTemplate", BOTTOMRIGHT, 0.0, 0.0,
-  // }
+// ============================================================================
+Frame "FRAME" "RealEditorTemplate" {
+  UseActiveContext,
+  Height 0.03,
+}
 
-  // Frame "BACKDROP" "IntEditorBackdrop" {
-  //   SetAllPoints,
-  //   DecorateFileNames, //Look-Up Names in some String table (for example gameinterface)
-  //   BackdropTileBackground, //Tile mode enabled
-  //   BackdropBackground  "ToolTipBackground", //BackgroundFile
-  //   BackdropCornerFlags "UL|UR|BL|BR|T|L|B|R",
-  //   BackdropCornerSize  0.008, //higher numbers make the corners bigger.
-  //   BackdropBackgroundInsets 0.0022 0.0022 0.0022 0.0022, //makes the background smaller, from the outside.
-  //   BackdropEdgeFile  "ToolTipBorder", //the border File
-  //   BackdropBlendAll,
-  // }
+// ============================================================================
+Frame "FRAME" "StringEditorTemplate" {
+  UseActiveContext,
+  Height 0.03,
+}
+
+// --- EDITBOX -----------------------------------------------------------------------
+
+Frame "TEXT" "InspectorEditBoxTextTemplate" {
+  DecorateFileNames,
+  FrameFont "MasterFont", 0.01, "",
+  FontColor 1.0 1.0 1.0,
+  FontFlags "FIXEDSIZE",
+}
+
+Frame "BACKDROP" "InspectorEditBoxBackdropTemplate" {
+  DecorateFileNames,
+  BackdropTileBackground,
+  BackdropBackground  "EscMenuEditBoxBackground",
+  BackdropCornerFlags "UL|UR|BL|BR|T|L|B|R",
+  BackdropCornerSize  0.0125,
+  BackdropBackgroundSize  0.256,
+  BackdropBackgroundInsets 0.005 0.005 0.005 0.005,
+  BackdropEdgeFile  "EscMenuEditBoxBorder",
+  BackdropBlendAll,
+}
+
+Frame "EDITBOX" "InspectorEditBoxTemplate" {
+  Height 0.04,
+  EditBorderSize 0.005,
+  EditCursorColor 1.0 1.0 1.0,
+
+  ControlBackdrop "InspectorEditBoxBackdrop",
+  Frame "BACKDROP" "InspectorEditBoxBackdrop" INHERITS "InspectorEditBoxBackdropTemplate" {
+  }
+
+  EditTextFrame "InspectorEditBoxBoxText",
+  Frame "TEXT" "InspectorEditBoxBoxText" INHERITS "InspectorEditBoxTextTemplate" {
+  }
 }
