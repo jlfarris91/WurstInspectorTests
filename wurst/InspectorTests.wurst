@@ -32,14 +32,3 @@ init
   playerSelectionChangedTrigger.addCondition(Condition(function onSelectionChanged))
   TriggerRegisterPlayerUnitEvent(playerSelectionChangedTrigger, g_HostPlayer, EVENT_PLAYER_UNIT_SELECTED, null)
   TriggerRegisterPlayerUnitEvent(playerSelectionChangedTrigger, g_HostPlayer, EVENT_PLAYER_UNIT_DESELECTED, null)
-
-  nullTimer() () ->
-    createFrame(
-      "GLUEEDITBOX",
-      "IntEditorTextBox",
-      GAME_UI,
-      "InspectorEditBoxTemplate", 0)
-    ..setText("<MISSING>")
-    ..setSize(0.15, 0.03)
-    ..setAbsPoint(FRAMEPOINT_CENTER, SCREEN_CENTER)
-    ..show()
