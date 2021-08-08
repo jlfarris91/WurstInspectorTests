@@ -24,11 +24,11 @@ function onSelectionChanged()
 // ============================================================================
 init
 
-  nullTimer() () ->
-    Inspector.initialize(g_HostPlayer)
-    Inspector.show()
+  // nullTimer() () ->
+  //   Inspector.initialize(g_HostPlayer)
+  //   Inspector.show()
   
-  let playerSelectionChangedTrigger = CreateTrigger()
-  playerSelectionChangedTrigger.addCondition(Condition(function onSelectionChanged))
-  TriggerRegisterPlayerUnitEvent(playerSelectionChangedTrigger, g_HostPlayer, EVENT_PLAYER_UNIT_SELECTED, null)
-  TriggerRegisterPlayerUnitEvent(playerSelectionChangedTrigger, g_HostPlayer, EVENT_PLAYER_UNIT_DESELECTED, null)
+  // let playerSelectionChangedTrigger = CreateTrigger()
+  // playerSelectionChangedTrigger.addCondition(Condition(function onSelectionChanged))
+  // TriggerRegisterPlayerUnitEvent(playerSelectionChangedTrigger, g_HostPlayer, EVENT_PLAYER_UNIT_SELECTED, null)
+  // TriggerRegisterPlayerUnitEvent(playerSelectionChangedTrigger, g_HostPlayer, EVENT_PLAYER_UNIT_DESELECTED, null)

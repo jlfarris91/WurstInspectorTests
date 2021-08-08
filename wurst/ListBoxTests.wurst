@@ -1,0 +1,80 @@
+package ListBoxTests
+import Frame
+import ClosureTimers
+import ListBox
+import Layout
+import Vector
+import Object
+import Grid
+
+public class Backdrop extends Frame
+  construct(framehandle frame)
+    super(frame)
+
+// ============================================================================
+public class ListBoxItem extends Frame
+  private Frame m_text
+  
+  construct(framehandle frame)
+    super(frame)
+
+  override function initialize()
+    super.initialize()
+
+    m_text = new Frame(createFrame("TEXT", "Text", GAME_UI, "BattleNetLabelTextTemplate", 0))
+    ..setMargin(0.005, 0, 0, 0)
+    ..initialize()
+    addLogicalChild(m_text)
+
+  override function measureOverride(vec2 availableSize) returns vec2
+    m_text.measure(availableSize)
+    return super.measureOverride(availableSize)
+
+  override function arrangeOverride(vec2 arrangeSize) returns vec2
+    m_text.arrange(rectrFromPosSize(ZERO2, arrangeSize))
+    return super.arrangeOverride(arrangeSize)
+
+  override function setDataContext(object value)
+    super.setDataContext(value)
+    m_text.setText("Item " + value.objectHandle.toString())
+
+
+// ============================================================================
+init
+
+  nullTimer() () ->
+
+    if (not loadTOCFile("Inspector.toc"))
+      Log.warn("Failed to load Inspector.toc")
+
+    let grid = new Grid()
+    ..setSize(vec2(0.1, 0.2))
+    ..setLocalPos((SCREEN_CENTER + SCREEN_RIGHT) / 2 - vec2(0.05, 0.1))
+
+    // let backdrop = new Backdrop(createFrame("BACKDROP", "Backdrop", GAME_UI, "BattleNetControlBackdropTemplate", 0))
+    // grid.addChild(backdrop)
+
+    let listBoxItemTemplate = new FrameTemplate()
+    ..setFrameDefinition(new FrameDefinition("BACKDROP", "ListBoxItem", GAME_UI, "TestBackdrop", 0))
+    listBoxItemTemplate.setItemFrameFactory() (framehandle frameHandle) ->
+      return new ListBoxItem(frameHandle)..setHeight(0.02)..initialize()
+
+    let itemSource = new Vector<object>()
+
+    for i = 1 to 100
+      itemSource.add(object(i))
+
+    let listBox = new ListBox()
+    ..setMargin(0.008)
+    ..setHorizontalLayoutMode(HorizontalLayoutMode.STRETCH)
+    ..setVerticalLayoutMode(VerticalLayoutMode.STRETCH)
+    ..setItemFrameTemplate(listBoxItemTemplate)
+    ..setItemsSource(itemSource)
+    ..initialize()
+
+    grid
+    ..addChild(listBox)
+    ..initialize()
+    ..measure(grid.getSize())
+    ..arrange(rectrFromPosSize(grid.getAbsPos(), grid.getSize()))
+    ..show()
