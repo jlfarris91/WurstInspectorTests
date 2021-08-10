@@ -6,6 +6,7 @@ import Layout
 import Vector
 import Object
 import Grid
+import ClosureKeyPresses
 
 public class Backdrop extends Frame
   construct(framehandle frame)
@@ -48,21 +49,21 @@ init
       Log.warn("Failed to load Inspector.toc")
 
     let grid = new Grid()
-    ..setSize(vec2(0.1, 0.2))
-    ..setLocalPos((SCREEN_CENTER + SCREEN_RIGHT) / 2 - vec2(0.05, 0.1))
+    ..setSize(vec2(0.2, 0.2))
+    grid.setLocalPos((SCREEN_CENTER + SCREEN_RIGHT) * 0.5 - grid.getSize() * 0.5)
 
-    // let backdrop = new Backdrop(createFrame("BACKDROP", "Backdrop", GAME_UI, "BattleNetControlBackdropTemplate", 0))
-    // grid.addChild(backdrop)
+    let backdrop = new Backdrop(createFrame("BACKDROP", "Backdrop", GAME_UI, "BattleNetControlBackdropTemplate", 0))
+    backdrop.initialize()
+    grid.addChild(backdrop)
 
     let listBoxItemTemplate = new FrameTemplate()
     ..setFrameDefinition(new FrameDefinition("BACKDROP", "ListBoxItem", GAME_UI, "TestBackdrop", 0))
     listBoxItemTemplate.setItemFrameFactory() (framehandle frameHandle) ->
       return new ListBoxItem(frameHandle)..setHeight(0.02)..initialize()
 
-    let itemSource = new Vector<object>()
-
-    for i = 1 to 100
-      itemSource.add(object(i))
+    let itemSource = new Vector<object>(100)
+    // for i = 1 to 100
+    //   itemSource.add(object(i))
 
     let listBox = new ListBox()
     ..setMargin(0.008)
@@ -78,3 +79,11 @@ init
     ..measure(grid.getSize())
     ..arrange(rectrFromPosSize(grid.getAbsPos(), grid.getSize()))
     ..show()
+
+    doPeriodically(0.5) (CallbackPeriodic cb) ->
+      itemSource.add(object(itemSource.getCount() + 1))
+      listBox.onItemSourceChanged()
+    
+    onKeyPress(OSKEY_ESCAPE) -> 
+      itemSource.clear()
+      listBox.onItemSourceChanged()
