@@ -5,8 +5,8 @@ import ListBox
 import Layout
 import Vector
 import Object
-import Grid
 import ClosureKeyPresses
+import GridPanel
 
 public class Backdrop extends Frame
   construct(framehandle frame)
@@ -48,7 +48,7 @@ init
     if (not loadTOCFile("Inspector.toc"))
       Log.warn("Failed to load Inspector.toc")
 
-    let grid = new Grid()
+    let grid = new GridPanel()
     ..setSize(vec2(0.2, 0.2))
     grid.setLocalPos((SCREEN_CENTER + SCREEN_RIGHT) * 0.5 - grid.getSize() * 0.5)
 
